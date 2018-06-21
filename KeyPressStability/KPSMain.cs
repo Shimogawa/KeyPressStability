@@ -49,10 +49,7 @@ namespace KeyPressStability
                 {
                     if (Console.ReadKey(true).Key == ConsoleKey.H)
                     {
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("This program tests your stability of pressing keys.\nPress any key to quit this program now.");
-                        Console.ReadKey();
+                        ShowHelp(true);
                         return false;
                     }
                 }
@@ -100,10 +97,21 @@ namespace KeyPressStability
         private void PrintResult(Data data)
         {
             var avgapm = 60000f * totalPress / totalTime;
-            Console.WriteLine("{0:hh:mm:ss.fff} - interval: {1:D}; offset: {2:D}, average: {3:F2}; average apm: {4:F1}",
+            var apm = 60000f / data.interval;
+            Console.WriteLine("{0:hh:mm:ss.fff} - interval: {1:D}; offset: {2:D}, average: {3:F2}; apm: {4:F0}, average: {5:F0}",
                 data.pressTime, data.interval,
                 data.offset, (float)totalOffset / totalPress,
-                avgapm);
+                apm, avgapm);
+        }
+
+        public void ShowHelp(bool clear)
+        {
+            if (clear)
+                Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("This program tests your stability of pressing keys and/or APM.\nPress any key to quit this program now.");
+            Console.ResetColor();
+            Console.ReadKey();
         }
     }
 }
